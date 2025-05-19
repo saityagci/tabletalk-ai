@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>TableTalk – Your Restaurant’s Voice</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
+  <script src="https://embed.vapi.ai/vapi-widget.js"></script>
+</head>
+<body class="bg-yellow-50 text-gray-900 font-sans">
+
+  <!-- Hero -->
+  <section class="min-h-screen flex flex-col justify-center items-center text-center px-6 py-20">
+    <img src="https://placehold.co/100x100?text=TT" alt="TableTalk Logo" class="w-24 mb-6 rounded-full" />
+    <h1 class="text-5xl font-bold mb-4">Give Your Restaurant a Voice</h1>
+    <p class="text-xl max-w-xl mb-8">AI voice assistant that handles reservations, answers calls, and manages waitlists — 24/7.</p>
+    <div class="flex flex-col md:flex-row gap-4">
+      <a href="#demo" class="bg-gray-900 text-white px-6 py-3 rounded-xl text-lg shadow">Try Demo</a>
+      <a href="#contact" class="border border-gray-900 text-gray-900 px-6 py-3 rounded-xl text-lg shadow">Book a Call</a>
+      <button onclick="startVapiCall()" class="bg-gray-900 text-white px-6 py-3 rounded-xl text-lg shadow">🎙️ Talk to TableTalk</button>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-yellow-50 text-gray-900 text-sm py-6 text-center">
+    © 2025 TableTalk — Powered by SFA AI Studio
+  </footer>
+
+  <!-- Vapi Script -->
+  <script>
+    function startVapiCall() {
+      VapiWidget.init({
+        apiKey: '2b12c388-8671-41f6-9c3b-79084d00dc3b'
+      });
+    }
+  </script>
+
+</body>
+</html>
