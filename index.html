@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>TableTalk – Your Restaurant’s Voiceeee</title>
+  <title>TableTalk – Your Restaurant’s Voice</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet"/>
-  <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web/dist/widget/vapi-widget.min.js"></script>
+ <!-- ✅ Vapi working script -->
+<script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@0.4.28/dist/vapi-widget.min.js"></script>
 </head>
 <body class="bg-yellow-50 text-gray-900 font-sans">
 
@@ -25,15 +26,13 @@
   <footer class="bg-yellow-50 text-gray-900 text-sm py-6 text-center">
     © 2025 TableTalk — Powered by SFA AI Studio
   </footer>
-
-  <!-- Vapi Widget Script -->
-  <script>
-    function startVapiCall() {
-      VapiWidget.init({
-        apiKey: 'c32bbd6c-da82-4442-869d-6ec621dcc223' // Replace with your own if needed
-      });
-    }
-  </script>
+<script>
+  function startVapiCall() {
+    VapiWidget.init({
+      apiKey: '2b12c388-8671-41f6-9c3b-79084d00dc3b' // your assistant's public key
+    });
+  }
+</script>
 
 </body>
 </html>
