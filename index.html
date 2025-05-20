@@ -54,7 +54,7 @@
       <h2 class="text-xl font-bold">Schedule Your Demo</h2>
       <button onclick="toggleModal(false)" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
     </div>
-    <form class="space-y-4" onsubmit="return validateForm(this)">
+    <form id="demoForm" class="space-y-4">
       <div class="flex space-x-4">
         <input type="text" name="firstName" placeholder="First Name" class="w-1/2 border border-gray-300 p-3 rounded-lg" required>
         <input type="text" name="lastName" placeholder="Last Name" class="w-1/2 border border-gray-300 p-3 rounded-lg" required>
@@ -77,9 +77,8 @@
 <!-- Hero Section -->
 <section class="text-center px-6 py-24 h-[calc(100vh-100px)] flex flex-col justify-center">
   <h4 class="uppercase text-sm tracking-widest text-blue-600 font-semibold mb-4">The #1 AI Voice Assistant for Restaurant</h4>
-  <h1 class="text-5xl font-bold mb-4">AI Reservations, Made Elegant</h1>
-  <p class="text-xl text-gray-600 mb-10">The Future of Guest Experience, Delivered by Voice</p>
-  <div id="#mic-button-anchor" class="flex justify-center mt-4"></div>
+  <h1 class="text-4xl font-bold mb-4">Seamless Conversations, Exceptional Hospitality</h1>
+  <p class="text-xl text-gray-600 mb-10">Designed for Modern Hospitality, Delivered by TableTalk AI</p>
 </section>
 
 <!-- How It Works -->
@@ -140,7 +139,7 @@
         <p class="text-gray-700">Access full transcripts and booking analytics anytime.</p>
       </div>
       <div class="bg-white bg-opacity-80 rounded-xl shadow-md p-6 text-left">
-        <h3 class="text-lg font-semibold mb-2">🌙 Always Available</h3>
+        <h3 class="text-lg font-semibold mb-2">Always Available</h3>
         <p class="text-gray-700">Never miss a call again — your AI host is always ready.</p>
       </div>
     </div>
@@ -188,12 +187,12 @@
 </script>
 <script>
   var vapiInstance = null;
-  const assistant = "e00c3cc6-632b-404a-9346-84d196194bc5"; // Your Assistant ID
+  const assistant = "2b12c388-8671-41f6-9c3b-79084d00dc3b"; // Your Assistant ID
   const apiKey = "2b63bf4a-4c39-4d96-90f9-f03f055dd869";  // Your Public API Key
   const buttonConfig = {
-    buttonSelector: "#mic-button-anchor",
-    position: "top-left",
-    offset: "0px",
+    showButton: true,
+    position: "top",
+    offset: "400px",
     width: "80px",
     height: "80px",
     customStyle: {
@@ -214,7 +213,7 @@
     active: {
       color: "rgb(255, 0, 0)", // Red during active call
       type: "round",
-      icon: "https://unpkg.com/lucide-static@0.321.0/icons/phone-off.svg"
+      icon: "https://unpkg.com/lucide-static@0.321.0/icons/mic-off.svg"
     }
   };
 
@@ -244,6 +243,42 @@
       }
     };
   })(document, "script");
+</script>
+<script>
+  document.getElementById('demoForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const form = e.target;
+    const data = {
+      firstName: form.firstName.value.trim(),
+      lastName: form.lastName.value.trim(),
+      phone: form.phone.value.trim(),
+      email: form.email.value.trim()
+    };
+
+    // 🔗 Replace this URL with your real n8n Webhook URL
+    const webhookUrl = 'https://alickaraman.app.n8n.cloud/webhook/5424cb9d-f2a3-4747-90da-4d85a7f2ce79';
+
+    try {
+      const res = await fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      });
+
+      if (res.ok) {
+        alert('Thank you! Your demo request has been submitted.');
+        toggleModal(false);
+      } else {
+        alert('Something went wrong. Please try again later.');
+      }
+    } catch (err) {
+      console.error('Error submitting form:', err);
+      alert('Error submitting form.');
+    }
+  });
 </script>
 
 
