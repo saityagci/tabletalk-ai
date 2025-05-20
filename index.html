@@ -1,36 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Talk to Our AI Assistant</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TableTalk AI – Your Restaurant’s Voice</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+    }
+    .gradient-bg {
+      background: linear-gradient(135deg, #f3f4f6, #e0f0ff);
+      position: relative;
+      z-index: 1;
+    }
+    .animated-waves::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: -1;
+      background: url('https://www.transparenttextures.com/patterns/connected.png'), linear-gradient(135deg, #e0f7ff 0%, #f4faff 100%);
+      animation: waveAnimation 10s ease-in-out infinite alternate;
+      background-size: cover;
+      opacity: 0.3;
+    }
+    @keyframes waveAnimation {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-20px); }
+    }
+    @keyframes pulseBounce {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-8px) scale(1.1); }
+    }
+    .microphone-animate {
+      animation: pulseBounce 1.8s ease-in-out infinite;
+    }
+    .modal input:required:invalid {
+      border-color: red;
+    }
+  </style>
 </head>
-<body>
-  <h1>Talk to Our AI Assistant</h1>
-  <button id="startBtn">Start Call</button>
-  <button id="stopBtn">End Call</button>
+<body class="gradient-bg animated-waves text-gray-800 min-h-screen">
 
-  <!-- Load Vapi SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@vapi-ai/web@latest/dist/vapi.min.js"></script>
+<!-- Modal -->
+<div id="demoModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-xl shadow-lg max-w-lg w-full p-8">
+    <div class="flex justify-between items-center mb-6">
+      <h2 class="text-xl font-bold">Schedule Your Demo</h2>
+      <button onclick="toggleModal(false)" class="text-gray-400 hover:text-gray-600 text-2xl">&times;</button>
+    </div>
+    <form class="space-y-4" onsubmit="return validateForm(this)">
+      <div class="flex space-x-4">
+        <input type="text" name="firstName" placeholder="First Name" class="w-1/2 border border-gray-300 p-3 rounded-lg" required>
+        <input type="text" name="lastName" placeholder="Last Name" class="w-1/2 border border-gray-300 p-3 rounded-lg" required>
+      </div>
+      <input type="tel" name="phone" placeholder="Phone Number" class="w-full border border-gray-300 p-3 rounded-lg" required>
+      <input type="email" name="email" placeholder="Email Address" class="w-full border border-gray-300 p-3 rounded-lg" required>
+      <button type="submit" class="w-full bg-blue-600 text-white py-3 rounded-lg font-semibold hover:bg-blue-700 transition">Submit</button>
+    </form>
+  </div>
+</div>
 
-  <script>
-    let vapi;
+<!-- Header -->
+<header class="flex justify-between items-center px-8 py-6">
+  <div class="text-2xl font-bold text-blue-600">TableTalk</div>
+  <div>
+    <button onclick="toggleModal(true)" class="border border-blue-600 text-blue-600 px-4 py-2 rounded-full font-semibold hover:bg-blue-600 hover:text-white transition">Request Demo</button>
+  </div>
+</header>
 
-    window.addEventListener("DOMContentLoaded", () => {
-      // Make sure Vapi is defined before using
-      if (typeof Vapi !== "undefined") {
-        vapi = new Vapi("YOUR_PUBLIC_API_KEY"); // ✅ Replace with your real key
+<!-- Hero Section -->
+<section class="text-center px-6 py-24 h-[calc(100vh-100px)] flex flex-col justify-center">
+  <h4 class="uppercase text-sm tracking-widest text-blue-600 font-semibold mb-4">The #1 AI Voice Assistant for Hospitality</h4>
+  <h1 class="text-5xl font-bold mb-4">AI Reservations, Made Elegant</h1>
+  <p class="text-xl text-gray-600 mb-10">The Future of Guest Experience, Delivered by Voice</p>
+  <div class="mb-6">
+    <button class="bg-blue-600 text-white rounded-full p-5 hover:bg-blue-700 transition transform hover:scale-110 microphone-animate">🎙️</button>
+  </div>
+  <div class="text-gray-700 text-sm">
+    <span class="font-semibold">4.9/5 star reviews</span> – Hundreds of happy venues worldwide
+  </div>
+</section>
 
-        document.getElementById("startBtn").onclick = () => {
-          vapi.start({ assistant: "YOUR_ASSISTANT_ID" }); // ✅ Replace with real assistant ID
-        };
+<!-- How It Works -->
+<section class="py-24 px-6 text-center">
+  <h2 class="text-3xl font-bold mb-16">How It Works</h2>
+  <div class="flex flex-col md:flex-row items-center justify-center gap-12 max-w-6xl mx-auto">
+    <div class="flex flex-col items-center text-center max-w-xs">
+      <div class="bg-blue-100 rounded-full w-24 h-24 flex items-center justify-center mb-4">📞</div>
+      <h3 class="text-xl font-semibold mb-2">Guest Dials</h3>
+      <p class="text-gray-600">TableTalk responds with poise and professionalism.</p>
+    </div>
+    <div class="flex flex-col items-center text-center max-w-xs">
+      <div class="bg-blue-100 rounded-full w-24 h-24 flex items-center justify-center mb-4">🧠</div>
+      <h3 class="text-xl font-semibold mb-2">Understands Intent</h3>
+      <p class="text-gray-600">Reservations, questions, or updates are smoothly recognized.</p>
+    </div>
+    <div class="flex flex-col items-center text-center max-w-xs">
+      <div class="bg-blue-100 rounded-full w-24 h-24 flex items-center justify-center mb-4">✅</div>
+      <h3 class="text-xl font-semibold mb-2">Takes Action</h3>
+      <p class="text-gray-600">Confirms bookings, sends messages, and notifies your team.</p>
+    </div>
+  </div>
+</section>
 
-        document.getElementById("stopBtn").onclick = () => {
-          vapi.stop();
-        };
-      } else {
-        console.error("Vapi SDK failed to load.");
+<!-- Tailored Elegance -->
+<section class="py-24 px-6">
+  <div class="max-w-6xl mx-auto text-center">
+    <h2 class="text-4xl font-bold mb-6">Tailored Elegance, Powered by AI</h2>
+    <p class="text-lg text-gray-600 mb-12">Everything your restaurant needs to speak fluently with every guest – automatically, intelligently, and beautifully.</p>
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <div class="bg-white bg-opacity-80 rounded-xl shadow-md p-6 text-left">
+        <h3 class="text-lg font-semibold mb-2">🎤 Multilingual Finesse</h3>
+        <p class="text-gray-700">Human-like conversation in any language your guests speak.</p>
+      </div>
+      <div class="bg-white bg-opacity-80 rounded-xl shadow-md p-6 text-left">
+        <h3 class="text-lg font-semibold mb-2">📅 24/7 Scheduling</h3>
+        <p class="text-gray-700">Reservations handled around the clock — even while you sleep.</p>
+      </div>
+      <div class="bg-white bg-opacity-80 rounded-xl shadow-md p-6 text-left">
+        <h3 class="text-lg font-semibold mb-2">📚 Brand Trained</h3>
+        <p class="text-gray-700">Knows your menu, service style, and guest expectations.</p>
+      </div>
+      <div class="bg-white bg-opacity-80 rounded-xl shadow-md p-6 text-left">
+        <h3 class="text-lg font-semibold mb-2">📊 Guest Insights</h3>
+        <p class="text-gray-700">Access full transcripts and booking analytics anytime.</p>
+      </div>
+      <div class="bg-white bg-opacity-80 rounded-xl shadow-md p-6 text-left">
+        <h3 class="text-lg font-semibold mb-2">🌙 Always Available</h3>
+        <p class="text-gray-700">Never miss a call again — your AI host is always ready.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Final CTA -->
+<section class="py-24 px-6 text-center">
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-4xl font-bold mb-6">Ready to Transform Guest Experience?</h2>
+    <p class="text-lg text-gray-700 mb-8">Let TableTalk handle the conversations, so your team can focus on hospitality. Start with a private demo and experience the difference.</p>
+    <button onclick="toggleModal(true)" class="inline-block bg-blue-600 text-white px-8 py-4 rounded-full text-lg font-semibold hover:bg-blue-700 transition">Schedule Your Demo</button>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-200 text-gray-600 text-sm text-center py-6">
+  <p>&copy; 2025 TableTalk AI. All rights reserved.</p>
+  <div class="mt-2 space-x-4">
+    <a href="#" class="hover:underline">Privacy Policy</a>
+    <a href="#" class="hover:underline">Terms of Service</a>
+    <a href="mailto:hello@tabletalk.ai" class="hover:underline">Contact Us</a>
+  </div>
+</footer>
+
+<!-- Modal Script -->
+<script>
+  function toggleModal(show) {
+    const modal = document.getElementById('demoModal');
+    modal.classList.toggle('hidden', !show);
+    modal.classList.toggle('flex', show);
+  }
+  function validateForm(form) {
+    const fields = form.querySelectorAll('[required]');
+    for (let field of fields) {
+      if (!field.value.trim()) {
+        field.focus();
+        return false;
       }
-    });
-  </script>
+    }
+    alert('Thank you! Your demo request has been submitted.');
+    toggleModal(false);
+    return false;
+  }
+</script>
+<script>
+  var vapiInstance = null;
+  const assistant = "2b12c388-8671-41f6-9c3b-79084d00dc3b"; // Your Assistant ID
+  const apiKey = "2b63bf4a-4c39-4d96-90f9-f03f055dd869";  // Your Public API Key
+  const buttonConfig = {}; // Optional configuration
+
+  (function (d, t) {
+    var g = document.createElement(t),
+            s = d.getElementsByTagName(t)[0];
+    g.src = "https://cdn.jsdelivr.net/gh/VapiAI/html-script-tag@latest/dist/assets/index.js";
+    g.defer = true;
+    g.async = true;
+    s.parentNode.insertBefore(g, s);
+
+    g.onload = function () {
+      vapiInstance = window.vapiSDK.run({
+        apiKey: apiKey,
+        assistant: assistant,
+        config: buttonConfig,
+      });
+
+      // 👇 Add click listener to microphone button
+      const micBtn = document.getElementById('mic-button');
+      if (micBtn) {
+        micBtn.addEventListener('click', function () {
+          if (vapiInstance) {
+            vapiInstance.start(); // Starts the assistant when mic is clicked
+          }
+        });
+      }
+    };
+  })(document, "script");
+</script>
+
+
 </body>
 </html>
